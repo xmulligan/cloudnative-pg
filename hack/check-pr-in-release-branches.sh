@@ -14,11 +14,11 @@ fi
 search_string="$1"
 shift
 
-branches="origin/main $(git branch -a | grep origin/release- | sed -e 's/remotes\///')"
+branches="main $(git for-each-ref --format '%(refname)' 'refs/heads/release*' | sed -e 's@refs/heads/@@' | sort -rV)"
 found=0
 for branch in $branches; do
     echo "Checking branch: $branch"
-    if git log "$branch" --grep="$search_string" -i --oneline | grep -q .; then
+    if git log "origin/$branch" --grep="$search_string" -i --oneline | grep -q .; then
         echo "✅ Found \"$search_string\" in commits on branch: $branch"
         found=1
     else
