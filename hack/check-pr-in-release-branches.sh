@@ -14,7 +14,7 @@ fi
 search_string="$1"
 shift
 
-branches="main $(git branch -a | grep origin/release- | sed -e 's/remotes\///')"
+branches="origin/main $(git branch -a | grep origin/release- | sed -e 's/remotes\///')"
 found=0
 for branch in $branches; do
     echo "Checking branch: $branch"
